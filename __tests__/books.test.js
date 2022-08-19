@@ -73,9 +73,8 @@ describe('book routes', () => {
         },
       ]);
 
-      await db.Author.bulkCreate([
 
-      ]);
+      
     } catch (e) {
       console.log(e);
     }
@@ -90,5 +89,15 @@ describe('book routes', () => {
     expect(res.status).toBe(200);
     expect(res.body.length).toBe(8);
   });
-
+  it('GET /books/:id should return book detail', async () => {
+    const res = await request(app).get('/api/v1/books/1');
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 1,
+      title: 'All the Light We Cannot See',
+      released: 2014,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+    });
+  });
 });
