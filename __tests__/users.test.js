@@ -7,16 +7,6 @@ const testUser = {
   password: '123456',
 };
 
-const registerAndLogin = async (userProps = {}) => {
-  const password = userProps.password ?? testUser.password;
-  const agent = request.agent(app);
-  const user = await db.User.create({ ...testUser, ...userProps });
-
-  const { email } = user;
-  await agent.post('/api/v1/users/sessions').send({ email, password });
-  return [agent, user];
-};
-
 describe('user routes', () => {
   beforeEach(async () => {
     await db.sequelize.sync({ force: true });
